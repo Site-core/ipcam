@@ -1,0 +1,109 @@
+<?php defined('sCore') or die('access denied');?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{page_title}</title>
+	<meta charset="UTF-8" name="viewport" content="width=device-width" >
+	<link type="text/css" rel="StyleSheet" href="/css/style.css">
+	<link type="text/css" rel="StyleSheet" href="/css/style768.css">
+	<link type="text/css" rel="stylesheet" href="/css/reset.css">
+	<link type="text/css" rel="StyleSheet" href="/css/slider.css">
+	<link type="text/css" rel="StyleSheet" href="/css/how_it_works.css">
+	
+	<link type="text/css" rel="stylesheet" href="/css/vPlayer.css">
+	<link type="text/css" rel="stylesheet" href="/css/hPlayer.css">
+	<link type="text/css" rel="StyleSheet" href="/css/price.css">
+	<link type="text/css" rel="StyleSheet" href="/css/calendar.css">
+	<link type="text/css" rel="StyleSheet" href="/css/style540.css">
+	<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&subset=latin,cyrillic' >
+	<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic'>
+	<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/js/hPlayer.js"></script>
+	<script type="text/javascript" src="/js/msgBoxLib.js"></script>
+</head>
+<body>
+<script>
+function getQueryParams(qs) {
+    qs = qs.split("+").join(" ");
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])]
+            = decodeURIComponent(tokens[2]);
+    }
+    return params;
+};
+var $_GET = getQueryParams(document.location.search);
+
+$(document).ready(function(){
+	$('#authorize').hover(function() {
+		if (window.innerWidth>1040)
+			$('.exit',this).stop().animate({width: 'toggle'},'fast');
+	});
+
+	var open_menu = document.createElement("button");
+	$(open_menu).addClass('open_menu');
+	$(open_menu).click(function() {
+		$('.nav').stop().animate({height: 'toggle'},'fast');
+	});
+	$(open_menu).appendTo('.logo');
+	
+	$(window).on("resize", function () {
+		if (window.innerWidth > 540){
+			if ( $('.nav').is(":hidden") ) $('.nav').css("display", "");
+		}
+	});
+	
+	if ($_GET["error"]){
+		switch ($_GET["error"]) {
+			case 'lgn_psw':
+				var errMsgBox = 'err_lgn_psw'
+				break
+			case 'empty_auth_flds':
+				var errMsgBox = 'err_empty_auth_flds'
+				break
+		}
+		msgBox({content:'{login_form}',class:'msgBox', sndClass:errMsgBox});
+	}
+});
+</script>
+
+
+
+	<div class="wrapper">
+		
+		<div class="header clear-fix">
+			{menu_top}
+		</div>
+		
+		{slider_wrapper_BEGIN}
+		
+			{menu_right}
+			{slider}
+		
+		{slider_wrapper_END}
+		
+		<div class="content clear-fix">
+			{menu_right_cabinet}
+			{content}
+		</div>
+	</div>
+		<div class="footer">
+			<div class="mid-footer">
+			<ul class="social_block">
+				<li class="social_button vk"><a href="https://vk.com/"></a></li><!--
+				--><li class="social_button twitter"><a href="https://twitter.com/"></a></li><!--
+				--><li class="social_button ok"><a href="http://www.odnoklassniki.ru/"></a></li><!--
+				--><li class="social_button google"><a href="https://www.google.ru/"></a></li>
+				</ul>
+				<div class="copyright">
+				{copyright}
+				</div>	
+				</div>
+
+			</div>
+		</div>
+</body>
+</html>

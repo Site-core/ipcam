@@ -1,0 +1,110 @@
+#slider1_container{
+}
+#slider1_container .slides {width: 100%; }
+
+/* jssor slider bullet navigator skin 05 css */
+/*
+.jssorb05 div   (normal)
+.jssorb05 div:hover (normal mouseover)
+.jssorb05 .av   (active)
+.jssorb05 .av:hover (active mouseover)
+.jssorb05 .dn   (mousedown)
+*/
+.jssorb05 div, .jssorb05 div:hover, .jssorb05 .av {
+background: url(../img/slider/b05.svg) no-repeat;
+overflow: hidden;
+cursor: pointer;
+}
+
+.jssorb05 div {
+background-position: 0px 0px;
+}
+
+.jssorb05 div:hover, .jssorb05 .av:hover {
+background-position: -27px 0px;
+}
+
+.jssorb05 .av {
+background-position: -57px 0px;
+}
+
+.jssorb05 .dn, .jssorb05 .dn:hover {
+background-position: -87px 0px;
+}
+
+/* jssor slider arrow navigator skin 12 css */
+/*
+.jssora12l  (normal)
+.jssora12r  (normal)
+.jssora12l:hover(normal mouseover)
+.jssora12r:hover(normal mouseover)
+.jssora12ldn(mousedown)
+.jssora12rdn(mousedown)
+*/
+.jssora12l, .jssora12r, .jssora12ldn, .jssora12rdn {
+position: absolute;
+cursor: pointer;
+display: block;
+background: url(../img/buttons.png) no-repeat;
+overflow: hidden;
+}
+
+.jssora12l {
+background-position: -1px 0px;
+}
+
+.jssora12r {
+background-position: -100px 0px;
+}
+
+.jssora12l:hover {
+background-position: -35px 0px;
+}
+
+.jssora12r:hover {
+background-position: -68px 0px;
+}
+
+.jssora12ldn {
+background-position: -35px 0px;
+}
+
+.jssora12rdn {
+background-position: -68px 0px;
+}
+
+.slide_text_1 ul{
+	width: 12.125em;
+	float: right;
+	margin-right: 3.5em;
+	
+}
+
+.slide_text_1 ul li {
+	float: left;
+	background: url(../img/list_arow.png) no-repeat 0 1.2em;
+	width: 100%;
+	padding: 0.6em 0 0.6em 1.1em;
+}
+
+.slide_text_1 ul li span {
+	
+	text-align: left;
+	font-family: 'OpenSansCondensedLight';
+	font-size: 1.1em;
+}
+
+.text_area {
+	text-align: center;
+	color: #333;
+	float: left;
+	width: 100%;
+	margin-top: 1.9em;
+}
+
+.text_area span {
+	text-align: left;
+	font-family: 'OpenSansCondensedLight';
+	font-size: 1.3em;
+	color: #333;
+}

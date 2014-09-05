@@ -1,0 +1,130 @@
+.calendar {
+	width: 90%;
+	margin: 0 auto;
+	border: 1px solid #999;
+	background-color: #fff;
+
+}
+
+.month {
+	border-bottom: 1px solid #7f7f7f;
+	background-color: rgba(65, 177, 90, 0.83);
+	float: left;
+	width: 100%;
+	height: 4em;
+}
+
+.prev_arow {
+	float: left;
+	width: 15%;
+	height: 100%;
+	background: url(../img/prev_arow.svg) no-repeat center center;
+}
+
+.prev_arow:hover {
+	cursor: pointer;
+	background: url(../img/prev_arow_hover.svg) no-repeat center center;
+}
+
+.month_name {
+	width: 70%;
+	float: left;
+	text-align: center;
+	line-height: 4em;
+}
+
+.month_name h2 {
+	text-shadow: 0px 0px 5px rgba(150, 150, 150, 1);
+	font-family: 'Lobster';
+	color: #fff;
+	vertical-align: middle;
+	font-size: 2.2em;
+}
+
+.next_arow {
+	float: right;
+	width: 15%;
+	height: 100%;
+	background: url(../img/next_arow.svg) no-repeat center center;
+}
+
+.next_arow:hover {
+	cursor: pointer;
+	background: url(../img/next_arow_hover.svg) no-repeat center center;
+}
+
+.days {
+	width: 100%;
+	-webkit-box-sizing:border-box; 
+	-moz-box-sizing:border-box; 
+	box-sizing:border-box;
+	padding: 0 0.6em;
+	float: left;
+	height: 2.7em;
+}
+
+.days_ul li {
+	float: left;
+	text-align: center;
+	vertical-align: middle;
+	width: 14.2857143%;
+	line-height: 2.7em;
+	font-family: 'PT Sans';
+	color: #3f3f3f;
+}
+
+.dates {
+	-webkit-box-sizing:border-box; 
+	-moz-box-sizing:border-box; 
+	box-sizing:border-box;
+	width: 100%;
+	float: left;
+	padding: 0 0.6em 0.6em;
+}
+
+.dates_list {
+	border-top: 1px solid #ccc;
+}
+
+.dates_list li:nth-child(7n) {
+	border-right: 1px solid #ccc;
+}
+
+.dates_list li:last-child {
+	border-right: 1px solid #ccc;
+	width: 14.42%;
+}
+
+.dates_list li {
+	float: left;
+	-webkit-box-sizing:border-box; 
+	-moz-box-sizing:border-box; 
+	box-sizing:border-box;
+	width: 14.2857143%;
+	height: 0%;
+	padding: 4% 0;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.dates_list li a {
+	-webkit-box-sizing:border-box; 
+	-moz-box-sizing:border-box; 
+	box-sizing:border-box;
+	font-size: 2em;
+	font-family: 'Lobster';
+	vertical-align: middle;
+	text-align: center;
+	display: block;
+	width: 100%;
+	height: 100%;
+	color: #686868;
+}
+
+.dates_list li a:hover {
+	color: #383838;
+}
+
+.dates_list li:hover {
+	background-color: #e7e7e7;
+}
