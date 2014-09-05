@@ -2,10 +2,10 @@
 defined('sCore') or die;
 session_start();
 //Необходимо подключиться к БД
-$link = mysql_connect($DBSERVER, $DBUSER, $DBPASS)
-or die("Не могу подключиться" );
+$link = @mysql_connect($DBSERVER, $DBUSER, $DBPASS)
+or die("Не могу подключиться к БД" );
 // сделать $DB текущей базой данных
-mysql_select_db($DB, $link) or die ('Не могу выбрать БД');
+@mysql_select_db($DB, $link) or die ('Не могу выбрать БД');
 
 //Если нет сессий
 if(md5(crypt($_SESSION['user'],$_SESSION['password'])) != $_SESSION['SID']) {
