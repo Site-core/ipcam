@@ -31,7 +31,7 @@ $template->register_file($tpl, "templates/index.tpl.html");
 if (!$authorized) {
 	$template->register_file('login_form', "parts/login_form.html");
 	$login_form = $template->get_file('login_form');
-	$login_form = str_replace("\n", '', $login_form);
+	$login_form = str_replace("\r\n", '', $login_form);
 	$login_button = "<ul><li><a
 	onclick=\"msgBox({content:'$login_form',class:'msgBox',height:300},event);\"
 	href='javascript:void(0)'>Авторизация</a></li></ul>";
