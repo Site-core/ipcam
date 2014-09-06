@@ -18,10 +18,8 @@ $authorized = false;
 //Если кнопка нажата
 if($_POST['do']) {
 //Проверяем данные
-$login = strip_tags(stripslashes(substr($_POST['login'],0,30)));
-$login = preg_replace("/[^(\w-)]/",'',$login);
-$upass = strip_tags(stripslashes(substr($_POST['password'],0,50)));
-$upass = preg_replace("/[^(\w-)]/",'',$upass);
+$login = preg_replace("/[^(\w-)]/",'',strip_tags(substr($_POST['login'],0,30)));
+$upass = preg_replace("/[^(\w-)]/",'',strip_tags(substr($_POST['password'],0,50)));
 if($login !='' AND $upass !='') {
 //Создаем запрос
 $q1=@mysql_query("SELECT * FROM users WHERE nick='".$login."' AND password='".md5($upass)."' AND status=1");
