@@ -74,8 +74,4 @@ class db_controller {
 
 	
 }
-
-//$link = mysql_connect($DBSERVER, $DBUSER, $DBPASS)
-//or die("Не могу подключиться" );
-//mysql_select_db($DB, $link) or die ('Не могу выбрать БД');
 ?>
