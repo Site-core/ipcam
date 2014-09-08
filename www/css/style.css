@@ -864,7 +864,6 @@ input {
 }
 
 .map_block {
-	background: url(../img/map.png) no-repeat center center;
 	position: relative;
 	height: 400px;
 	border: 2px solid #ccc;

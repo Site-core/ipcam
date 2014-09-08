@@ -19,7 +19,7 @@ div, li, a {
 }
 
 .content, .mid-header, #video-streams , .header, .wrapper, .line , .slider-wrapper, .special-price, .feedback, .footer, .mid-footer, .small-feed {
-	min-width: 200px;
+	min-width: 320px;
 	width: 100%;
 }
 
