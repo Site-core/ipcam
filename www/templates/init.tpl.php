@@ -71,10 +71,10 @@ $$menu = $this->get_file($menu);
 }
 
 // Обработчик страниц
-function sec_pgs($pgs) {
-GLOBAL $authorized;
-if (!$authorized) {
-$this->sec_pgs = explode(",", $pgs);
+function sec_pgs($pages) {
+GLOBAL $session_controller;
+if (!$session_controller->authorized) {
+$this->sec_pgs = explode(",", $pages);
 }
 }
 

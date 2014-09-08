@@ -1,6 +1,12 @@
 <?php
 defined('sCore') or die;
 session_start();
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+	// last request was more than 30 minutes ago
+	session_unset();
+	session_destroy();	// destroy session data in storage
+}
+$_SESSION['LAST_ACTIVITY'] = time();
 //Необходимо подключиться к БД
 $link = @mysql_connect($DBSERVER, $DBUSER, $DBPASS)
 or die("Не могу подключиться к БД" );
@@ -42,6 +48,7 @@ else {header("Location: ?error=empty_auth_flds");}
 }
 else {
 	if($_GET['exit']) {
+		session_unset();
 		session_destroy();
 		unset($_GET['exit']);
 		mysql_close($link);

@@ -3,15 +3,18 @@ define('sCore', true);
 //Поключаем конфиг
 require("includes/config.inc.php");
 
-require ("authorization.php");
-
+require("/includes/db_controller.inc.php");
+require("/includes/session_controller.inc.php");
+$db_controller = new db_controller;
+$session_controller = new session_controller();
 // Включить класс шаблона
 require ("templates/init.tpl.php");
 
 // Присвоить значения переменным
-$user_id=$r2['id'];
-$user_nick=$r2['nick'];
-$user_fund=$r2['fund'];
+$user_info=$db_controller->user_data();
+$user_id=$user_info['id'];
+$user_nick=$user_info['nick'];
+$user_fund=$user_info['fund'];
 $page_title = "cam-net.ru";
 $copyright = 'cam-net.ru &copy; 2014';
 
@@ -23,12 +26,12 @@ $tpl = "cam_net_ru"; // название экземпляра
 $template->set_tpl($tpl);
 
 // Регистрация файлов
-$template->sec_pgs("streams,archive,cabinet");
+$template->sec_pgs("streams,archive,cabinet,finance,cams_settings,events");
 $template->set_content();
 
 $template->register_file($tpl, "templates/index.tpl.html");
 
-if (!$authorized) {
+if (!$session_controller->authorized) {
 	$template->register_file('login_form', "parts/login_form.html");
 	$login_form = $template->get_file('login_form');
 	$login_form = str_replace("\r\n", '', $login_form);
@@ -49,14 +52,14 @@ if (!isset($_GET['page'])){
 	$slider_wrapper_BEGIN = "<div class='slider-wrapper clear-fix'>";
 	$slider_wrapper_END = "</div>";
 }
-elseif ($authorized) {
+elseif ($session_controller->authorized) {
 	switch ($_GET['page']) {
 	case 'finance':
 		$prTable_BEGIN = '<table class="payments_records"><tbody><tr><th>№ заказа</th><th>Сумма</th><th>Дата платежа</th></tr>';
 		$prTable_END = '</tbody></table>';
-		$payments_records = @mysql_query("SELECT * FROM payments WHERE uid=$user_id");
-		if(mysql_num_rows($payments_records)!=0){
-			while($data = mysql_fetch_assoc($payments_records)){
+		$payments_records = $db_controller->payments_data();
+		if($payments_records){
+			foreach($payments_records as $data){
 				$payments_report =$payments_report.'<tr>
 				<td>'.$data[payment_num].'</td>
 				<td>'.$data[sum].'</td>

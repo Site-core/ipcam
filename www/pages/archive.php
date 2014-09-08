@@ -3,8 +3,7 @@ defined('sCore') or die('access denied');
 
 //Подключаем файл с функциями
 include("includes/functions.inc.php");
-
-$root_dir = ARCHVS_DIR.'/uid_'.'{user_id}';
+$root_dir = ARCHVS_DIR.'/uid_{user_id}';
 $path = $root_dir;
 
 if(isset($_GET['page']))$page = $_GET['page'];
