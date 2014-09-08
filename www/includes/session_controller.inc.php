@@ -2,17 +2,26 @@
 
 class session_controller {
 	var $authorized = false;
-	var $session_lifetime;
+	var $session_lifetime = 1800;
+	var $sid_rst_time = 1800;
 	
 	function __construct() {
 		session_start();
-		if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+		if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $this->session_lifetime)) {
 			// last request was more than 30 minutes ago
 			session_unset();
 			session_destroy();	// destroy session data in storage
 		}
 		$_SESSION['LAST_ACTIVITY'] = time();
 		
+		if (!isset($_SESSION['CREATED'])) {
+			$_SESSION['CREATED'] = time();
+			
+		} else if (time() - $_SESSION['CREATED'] > $this->sid_rst_time) {
+			// session started more than 30 minutes ago
+			session_regenerate_id(true);    // change session ID for the current session and invalidate old session ID
+			$_SESSION['CREATED'] = time();  // update creation time
+		}
 		if(md5(crypt($_SESSION['user'],$_SESSION['password'])) != $_SESSION['SID']) {
 			if($_POST['do']) {
 				$this->authorization();
