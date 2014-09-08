@@ -9,16 +9,16 @@
 </div>
 
 <?php
-$q3 = @mysql_query("SELECT cam_ip, port, login, password FROM cams WHERE uid IN (SELECT id FROM users WHERE nick='".$_SESSION['user']."' AND password='".$_SESSION['password']."' AND status=1)");
-
-if(mysql_num_rows($q3)!=0){
-echo '<script>var hosts = [';
-	while($data = mysql_fetch_array($q3)){
+$cams_data = db_controller::cams_data();
+if($cams_data){
+	echo '<script>var hosts = [';
+	foreach($cams_data as $data){
 		echo "'".$data[cam_ip]."',";
 	}
-echo '];</script>';
-} else {echo 'У вас нет доступных камер';}
-
+	echo '];</script>';
+} else {
+	echo 'У вас нет доступных камер';
+}
 ?>
 
 <script type="text/javascript" src="js/vPlayer.js"></script>
