@@ -1169,16 +1169,16 @@ background-color: #e7e7e7;
 	min-height: 30em; 
 	background-color: #fff;
 	border:1px solid #ccc;
+	font-family: 'PT Sans';
+	color: #555;
 }
 
-.size_block pre {
+.size_block p {
 	padding-left: 1.8em;
-	text-align: left;
+	text-align: justify;
 	line-height: 1.4em;
 	font-family: 'PT Sans';
 	font-size: 1.08em;
-	color: #555;
-
 }
 
 .close_img {
@@ -1233,4 +1233,19 @@ background-color: #e7e7e7;
 	font-size: 1.3em;
 }
 
-
+.systems_title {font-family:'PTSansBoldItalic';clear:both}
+.systems_picture {}
+.systems_specifications {float:right;margin-bottom:20px;}
+.systems_specifications li:before { 
+    content: "";
+    border-color: transparent grey;
+    border-style: solid;
+    border-width: 0.25em 0 0.25em 0.35em;
+    display: block;
+    height: 0;
+    width: 0;
+    left: -1em;
+    top: 0.9em;
+    position: relative;
+}
+.systems_description {clear:both;}
