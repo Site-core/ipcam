@@ -20,13 +20,14 @@
 		{
 		iconContent: 'cam-net.ru',
 		balloonContentHeader: 'Офис cam-net.ru',
-		balloonContent: 'Октябрьская улица, 1',
+		balloonContentBody: 'Октябрьская улица, 1',
 		balloonContentFooter: 'Новоуральск, Свердловская область, Россия'
 		},{
         preset: 'islands#darkGreenStretchyIcon'
 		}
 	);
 	myMap.geoObjects.add(myPlacemark);
+	myMap.controls.remove('searchControl');
 //	myMap.balloon.open(myMap.getCenter(),
 //	{
 //		contentHeader: 'Офис cam-net.ru',
