@@ -3,8 +3,8 @@ define('sCore', true);
 //Поключаем конфиг
 require("includes/config.inc.php");
 
-require("/includes/db_controller.inc.php");
-require("/includes/session_controller.inc.php");
+require("includes/db_controller.inc.php");
+require("includes/session_controller.inc.php");
 $db_controller = new db_controller;
 $session_controller = new session_controller();
 // Включить класс шаблона
@@ -53,7 +53,6 @@ if (!isset($_GET['page'])){
 	$slider_wrapper_END = "</div>";
 	$rMenu_wrapper_BEGIN = "<div class='right-menu'>";
 	$rMenu_wrapper_END = "</div>";
-	$template->register_variables('menu_right', "rMenu_wrapper_BEGIN,rMenu_wrapper_END");
 	$template->file_parser('menu_right');
 	$menu_right = $template->get_file('menu_right');
 }
@@ -91,7 +90,7 @@ elseif ($session_controller->authorized) {
 }
 
 // Регистрация блоков
-$template->register_variables($tpl, "slider,login_form,menu_top,menu_right,slider_wrapper_BEGIN,slider_wrapper_END,menu_right_cabinet");
+$template->register_variables($tpl, "slider,login_form,menu_top,rMenu_wrapper_BEGIN,rMenu_wrapper_END,menu_right,slider_wrapper_BEGIN,slider_wrapper_END,menu_right_cabinet");
 // Регистрация переменных
 $template->register_variables($tpl, "page_title,user_nick,user_fund,copyright,user_id,payments_report,payment_form");
 
