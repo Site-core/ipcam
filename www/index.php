@@ -51,6 +51,11 @@ if (!isset($_GET['page'])){
 	$template->set_menu('menu_right', 'parts/menu_right.html');
 	$slider_wrapper_BEGIN = "<div class='slider-wrapper clear-fix'>";
 	$slider_wrapper_END = "</div>";
+	$rMenu_wrapper_BEGIN = "<div class='right-menu'>";
+	$rMenu_wrapper_END = "</div>";
+	$template->register_variables('menu_right', "rMenu_wrapper_BEGIN,rMenu_wrapper_END");
+	$template->file_parser('menu_right');
+	$menu_right = $template->get_file('menu_right');
 }
 elseif ($session_controller->authorized) {
 	switch ($_GET['page']) {
