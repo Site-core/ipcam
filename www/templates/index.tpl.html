@@ -79,15 +79,20 @@ $(document).ready(function(){
 		</div>
 		
 		{slider_wrapper_BEGIN}
-		
-			{menu_right}
-			{slider}
+			<div class="right-menu">
+				{menu_right}
+			</div>
+		{slider}
 		
 		{slider_wrapper_END}
 		
 		<div class="content clear-fix">
 			{menu_right_cabinet}
 			{content}
+			<div class="right-menu-mobile">
+			<h2 class="line">Дополнительные сведения</h2>
+			{menu_right}
+			</div>
 		</div>
 	</div>
 		<div class="footer">

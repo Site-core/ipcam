@@ -171,10 +171,6 @@ h1 , h2 , h3, h4, p , a , span{
 	background: url(../img/noise_lines.png) fixed;
 }
 
-.right_nav_mob {
-	display: none;
-}
-
 .header {
 	margin-bottom: 2.5em;
 	border-top: 4px solid #53bf6b;
@@ -460,6 +456,10 @@ display:none;
 .right-menu > h2 {
 	margin: 20px 0;
 	text-align: right;
+}
+
+.right-menu-mobile {
+	display: none;
 }
 
 .right-nav li {
