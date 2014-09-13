@@ -9,7 +9,8 @@
 </div>
 
 <?php
-$cams_data = db_controller::cams_data();
+global $db_controller;
+$cams_data = $db_controller->cams_data();
 if($cams_data){
 	echo '<script>var hosts = [';
 	foreach($cams_data as $data){

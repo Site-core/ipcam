@@ -6,6 +6,8 @@ class session_controller {
 	var $sid_rst_time = 1800;
 	
 	function __construct() {
+		GLOBAL $db_controller;
+		$this->db_controller = $db_controller;
 		session_start();
 		if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $this->session_lifetime)) {
 			// last request was more than 30 minutes ago
@@ -30,18 +32,18 @@ class session_controller {
 			if($_GET['exit']) {
 				$this->logout();
 			}
-			if (db_controller::user_data())
+			if ($this->db_controller->user_data())
 				$this->authorized=true;
 		}
 	}
 	
 	function authorization() {
+		GLOBAL $db_controller;
 		$login = preg_replace("/[^(\w-)]/",'',strip_tags(substr($_POST['login'],0,30)));
 		$upass = preg_replace("/[^(\w-)]/",'',strip_tags(substr($_POST['password'],0,50)));
 		if($login !='' AND $upass !='') {
-			$auth_query=@mysql_query("SELECT * FROM users WHERE nick='".$login."' AND password='".md5($upass)."' AND status=1");
-			if(mysql_num_rows($auth_query)===1){
-				$user_data=mysql_fetch_array($auth_query);
+			$user_data=$this->db_controller->auth_query($login,md5($upass));
+			if($user_data){
 				$this->set_session_data($user_data);
 				header("Location: /");
 			} else {
@@ -66,7 +68,7 @@ class session_controller {
 		session_unset();
 		session_destroy();
 		unset($_GET['exit']);
-		db_controller::db_close();
+		$this->db_controller->db_close();
 		header("Location: /");
 	}
 }

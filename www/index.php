@@ -11,12 +11,12 @@ $session_controller = new session_controller();
 require ("templates/init.tpl.php");
 
 // Присвоить значения переменным
-$user_info=$db_controller->user_data();
-$user_id=$user_info['id'];
-$user_nick=$user_info['nick'];
-$user_fund=$user_info['fund'];
+$user_info = $db_controller->user_data();
+$user_id = $user_info['id'];
+$user_nick = $user_info['nick'];
+$user_fund = $user_info['fund'];
 $page_title = "cam-net.ru";
-$copyright = 'cam-net.ru &copy; 2014';
+$copyright = "cam-net.ru &copy; 2014";
 
 // Создать новый экземпляр класса
 $template = new template;
