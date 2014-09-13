@@ -38,7 +38,7 @@ player.prototype = {
 		
 		this.width = ( this.streams_block.offsetWidth - (list_margins + list_borders) ) / this.num;
 		this.height = Math.round(this.width / this.proportion);
-		console.log(this.streams_block.offsetWidth);
+	//	console.log(this.streams_block.offsetWidth);
 	},
 	
 	toggle : function(event) {
