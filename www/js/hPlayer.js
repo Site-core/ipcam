@@ -201,7 +201,7 @@ var hPlayer = function() {
             if (handler) {
                 $('#' + id).bind('click', {doing: hApi}, handler);
             }
-        },
+        }
     };
     var hInterface = {};
     var hApi = {};
@@ -333,7 +333,7 @@ var hPlayer = function() {
 					var msg = 'Для работы проигрывателя необходим VLC Multimedia Plug-in. Пожалуйста установите VLC Player на ваш компьютер!<br />';
 					msgBox({
 						content:msg,
-						class:'msgBox',
+						main_class:'msgBox',
 						sndClass:'err_vlc_plugin',
 						buttons:{
 							btn1:{

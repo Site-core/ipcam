@@ -17,7 +17,7 @@ if (!event) event = window.event;
 //default config
 		width: 300,
 		height: 200,
-		class: 'msgBox',
+		main_class: 'msgBox',
 		z_index: 99,
 		buttons: {},
 		
@@ -25,7 +25,7 @@ if (!event) event = window.event;
 			if (config != null) {
 				if(config.width) this.width =  config.width;
 				if(config.height) this.height =  config.height;
-				if(config.class) this.class =  config.class;
+				if(config.main_class) this.main_class =  config.main_class;
 				if(config.sndClass) this.sndClass =  config.sndClass;
 				if(config.z_index) this.z_index = config.z_index;
 				if (config.buttons) this.buttons = config.buttons;
@@ -101,7 +101,7 @@ if (!event) event = window.event;
 			var _this = this;
 			this.set_config();
 			this.msgBox = document.createElement("div");
-			this.msgBox.className = this.class;
+			this.msgBox.className = this.main_class;
 			this.set_styles();		
 			$(this.msgBox).html(config.content);
 			if ( !jQuery.isEmptyObject(this.buttons) )

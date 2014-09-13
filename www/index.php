@@ -36,7 +36,7 @@ if (!$session_controller->authorized) {
 	$login_form = $template->get_file('login_form');
 	$login_form = str_replace("\n", '', $login_form);
 	$login_button = "<ul><li><a
-	onclick=\"msgBox({content:'$login_form',class:'msgBox',height:300},event);\"
+	onclick=\"msgBox({content:'$login_form',main_class:'msgBox',height:300},event);\"
 	href='javascript:void(0)'>Авторизация</a></li></ul>";
 } else {
 	$login_button = '<ul><li><a href="/cabinet">Личный кабинет</a></li><li class="exit"><a href="?exit=1"></a></li></ul>';
