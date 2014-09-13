@@ -43,7 +43,7 @@ class db_controller {
 				$query = "SELECT cam_ip, port, login, password FROM cams WHERE uid IN (SELECT id FROM users WHERE nick='".$login."' AND password='".$password."' AND status=1)";
 				break;
 		}
-		$result = $this->mysqli->query($query);
+		$result = @$this->mysqli->query($query);
 		if($result->num_rows!=0){
 			return $result;
 		} else {
@@ -54,7 +54,7 @@ class db_controller {
 	function auth_query($login,$password) {
 		$result = !self::is_static() ? $this->get_db_data('auth_data',$login,$password) : self::get_db_data('auth_data',$login,$password);
 		if ($result->num_rows===1) {
-			$auth_data = $result->fetch_array(MYSQLI_ASSOC);
+			$auth_data = @$result->fetch_array(MYSQLI_ASSOC);
 		} else {
 			return false;
 		}
@@ -64,7 +64,7 @@ class db_controller {
 	function user_data($field=false) {
 		$result = !self::is_static() ? $this->get_db_data('user_data') : self::get_db_data('user_data');
 		if($result) {
-			$user_data = $result->fetch_array(MYSQLI_ASSOC);
+			$user_data = @$result->fetch_array(MYSQLI_ASSOC);
 		} else {
 			return false;
 		}
@@ -75,7 +75,7 @@ class db_controller {
 		$result = !self::is_static() ? $this->get_db_data('payments_data') : self::get_db_data('payments_data');
 		if (!$result) {return false;}
 		$payments_data = array();
-		while($row = mysqli_fetch_assoc($result)){
+		while($row = @mysqli_fetch_assoc($result)){
 			$payments_data[]=$row;
 		};
 		return $field ? $payments_data[$field] : $payments_data;
@@ -85,7 +85,7 @@ class db_controller {
 		$result = !self::is_static() ? $this->get_db_data('cams_data') : self::get_db_data('cams_data');
 		if (!$result) {return false;}
 		$cams_data = array();
-		while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+		while($row = @mysqli_fetch_array($result, MYSQLI_ASSOC)){
 			$cams_data[]=$row;
 		};	
 		return $field ? $cams_data[$field] : $cams_data;
