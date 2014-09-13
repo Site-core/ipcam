@@ -18,7 +18,7 @@ class db_controller {
 	}
 	
 	function db_close() {
-		$this->mysqli->close();
+		@$this->mysqli->close();
 	}
 	
 	function is_static() {
