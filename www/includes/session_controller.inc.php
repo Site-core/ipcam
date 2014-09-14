@@ -40,17 +40,17 @@ class session_controller {
 	function authorization() {
 		GLOBAL $db_controller;
 		$login = preg_replace("/[^(\w-)]/",'',strip_tags(substr($_POST['login'],0,30)));
-		$upass = preg_replace("/[^(\w-)]/",'',strip_tags(substr($_POST['password'],0,50)));
+		$upass = md5(preg_replace("/[^(\w-)]/",'',strip_tags(substr($_POST['password'],0,50))));
 		if($login !='' AND $upass !='') {
-			$user_data=$this->db_controller->auth_query($login,md5($upass));
+			$user_data=$this->db_controller->auth_query($login,$upass);
 			if($user_data){
 				$this->set_session_data($user_data);
 				header("Location: /");
 			} else {
-				header("Location: ?error=lgn_psw");
+				$this->auth_error('lgn_psw');
 			};
 		} else {
-			header("Location: ?error=empty_auth_flds");
+			$this->auth_error('empty_auth_flds');
 		}
 	}
 	
@@ -61,7 +61,7 @@ class session_controller {
 	}
 	
 	function auth_error($err){
-		return $error;
+		header("Location: ?error=$err");
 	}
 	
 	function logout() {
