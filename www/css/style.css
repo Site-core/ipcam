@@ -1143,15 +1143,18 @@ background-color: #e7e7e7;
 .payments_records th,.payments_records td {
 	padding:5px
 }
-TABLE.contract_details {
+TABLE.contract_details, TABLE.contract_specifications {
 	font-size: 1em;
 	text-align: left;
 	width: 100%;
 	margin: 0 auto;
 	border-collapse: collapse;
 	color: #575757;
-	table-layout:fixed;
-	}
+	table-layout: fixed;
+}
+TABLE.contract_specifications {
+	table-layout: auto;
+}
 .contract_details th{
 	border-bottom:1px solid black;
 	width:50%;
@@ -1159,6 +1162,10 @@ TABLE.contract_details {
 
 .contract_details td, .contract_details th{
 	padding:3px;
+	border:1px solid black;
+}
+.contract_specifications td, .contract_specifications th {
+	padding:1px;
 	border:1px solid black;
 }
 
