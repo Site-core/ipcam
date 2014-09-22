@@ -60,8 +60,8 @@ class session_controller {
 				$_SESSION['SID'] = md5(crypt($user_data['nick'],$user_data['password']));
 	}
 	
-	function auth_error($err){
-		header("Location: ?error=$err");
+	function auth_error($code){
+		header("Location: ?error=$code");
 	}
 	
 	function logout() {

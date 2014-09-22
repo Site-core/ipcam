@@ -1106,7 +1106,6 @@ input {
 }
 
 TABLE.payments_records {
-	border-spacing:1px;
 	font-size: 1.3em;
 	font-family: 'OpenSansCondensedLight';
 	text-align: center;
@@ -1127,7 +1126,7 @@ background-color: #e7e7e7;
 	border-top:none;
 }
 
-.payments_records td, th{
+.payments_records td, .payments_records th{
 	padding:3px;
 	border:1px solid #ccc;
 	text-align:center;
@@ -1143,6 +1142,24 @@ background-color: #e7e7e7;
 
 .payments_records th,.payments_records td {
 	padding:5px
+}
+TABLE.contract_details {
+	font-size: 1em;
+	text-align: left;
+	width: 100%;
+	margin: 0 auto;
+	border-collapse: collapse;
+	color: #575757;
+	table-layout:fixed;
+	}
+.contract_details th{
+	border-bottom:1px solid black;
+	width:50%;
+}
+
+.contract_details td, .contract_details th{
+	padding:3px;
+	border:1px solid black;
 }
 
 .acces_denied {
