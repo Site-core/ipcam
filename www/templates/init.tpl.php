@@ -95,7 +95,7 @@ class template {
 					}
 				}
 			}
-		} elseif ($page===null) {
+		} elseif (is_null($page)) {
 			GLOBAL $slider;
 			$this->register_file('slider', 'parts/slider.html');
 			$slider = $this->get_file('slider');

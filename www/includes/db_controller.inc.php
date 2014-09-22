@@ -52,6 +52,8 @@ class db_controller {
 	}
 	
 	function auth_query($login,$password) {
+		$login = $this->mysqli->real_escape_string($login);
+		$password = $this->mysqli->real_escape_string($password);
 		$result = !self::is_static() ? $this->get_db_data('auth_data',$login,$password) : self::get_db_data('auth_data',$login,$password);
 		if ($result->num_rows===1) {
 			$auth_data = @$result->fetch_array(MYSQLI_ASSOC);
