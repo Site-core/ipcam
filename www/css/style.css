@@ -1203,6 +1203,10 @@ TABLE.contract_specifications {
 	font-family: 'Times New Roman';
 	font-size: 1.08em;
 }
+.size_block ol {
+	list-style-type: decimal;
+	list-style-position: inside;
+}
 
 .close_img {
 	height: 0%;
