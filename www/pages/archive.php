@@ -21,7 +21,7 @@ echo '
 	<li><a class="active" href="/archive">Архив</a></li>
 </ul>
 
-<a href="'.$page.'"><img src="/img/home.gif"></a> ';
+<a href="/archive"><img src="/img/home.gif"></a> ';
 
 if ( $url || updir($url) ) {
 	echo '<a href="/'.$page.updir($url).'"><img src="/img/upone.gif"></a>';
