@@ -14,14 +14,14 @@ if(isset($_GET['url'])) {
 	$path = $root_dir.$url;
 }
 
-//Шапка
+//Селектор
 echo '
 <ul class="section_selector">
 	<li><a href="/streams">Камеры</a></li>
 	<li><a class="active" href="/archive">Архив</a></li>
 </ul>
-';
-echo '<a href="'.$page.'"><img src="/img/home.gif"></a> ';
+
+<a href="'.$page.'"><img src="/img/home.gif"></a> ';
 
 if ( $url || updir($url) ) {
 	echo '<a href="/'.$page.updir($url).'"><img src="/img/upone.gif"></a>';

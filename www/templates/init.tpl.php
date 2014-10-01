@@ -72,10 +72,10 @@ class template {
 
 	// Обработчик страниц
 	function sec_pgs($pages) {
-	GLOBAL $session_controller;
-	if (!$session_controller->authorized) {
-	$this->sec_pgs = explode(",", $pages);
-	}
+		GLOBAL $session_controller;
+		if (!$session_controller->authorized) {
+			$this->sec_pgs = explode(",", $pages);
+		}
 	}
 
 	function set_content() {
@@ -84,7 +84,7 @@ class template {
 			array("options"=>array("regexp"=>"/^[a-z0-9_]+$/")));
 		if ($page) {
 			if (is_array($this->sec_pgs) && in_array($_GET['page'], $this->sec_pgs)){
-			$content=PGS_DIR."access_denied.html";
+				$content=PGS_DIR."access_denied.html";
 			} else {
 				$content = PGS_DIR.$_GET['page'].".html";
 				if (!file_exists($content)){

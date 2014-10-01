@@ -3,13 +3,19 @@ define('sCore', true);
 //Поключаем конфиг
 require("includes/config.inc.php");
 
+// Подключение классов
 require("includes/db_controller.inc.php");
 require("includes/session_controller.inc.php");
+require ("templates/init.tpl_2.php");
+
+// Создать экземпляры классов
 $db_controller = new db_controller;
 $session_controller = new session_controller();
-// Включить класс шаблона
-require ("templates/init.tpl.php");
+$template = new template;
 
+$template->set_tpl('templates/index.tpl.html'); //Файл который мы будем парсить
+$template->pvt_pgs("streams,archive,cabinet,finance,cams_settings,events"); //Закрытые от публичного просмотра страницы
+$template->set_content();
 // Присвоить значения переменным
 $user_info = $db_controller->user_data();
 $user_id = $user_info['id'];
@@ -17,48 +23,21 @@ $user_nick = $user_info['nick'];
 $user_fund = $user_info['fund'];
 $page_title = "cam-net.ru";
 $copyright = "cam-net.ru &copy; 2014";
-
-// Создать новый экземпляр класса
-$template = new template;
-
-$tpl = "cam_net_ru"; // название экземпляра
-
-$template->set_tpl($tpl);
-
-// Регистрация файлов
-$template->sec_pgs("streams,archive,cabinet,finance,cams_settings,events");
-$template->set_content();
-
-$template->register_file($tpl, "templates/index.tpl.html");
+$menu_top = $template->get_file("parts/menu_top.html");
+$slider = $template->get_file("parts/slider.html");
+$menu_right = $template->get_file('parts/menu_right.html');
+$slider_block = '<div class="right-menu">'.$menu_right.'</div>'.$slider;
 
 if (!$session_controller->authorized) {
-	$template->register_file('login_form', "parts/login_form.html");
-	$login_form = $template->get_file('login_form');
-	$login_form = str_replace("\n", '', $login_form);
+	$login_form = $template->get_file("parts/login_form.html");
+	$login_form = str_replace("\n", '', addslashes($login_form));
 	$login_button = "<ul><li><a
 	onclick=\"msgBox({content:'$login_form',main_class:'msgBox',height:300},event);\"
 	href='javascript:void(0)'>Авторизация</a></li></ul>";
 } else {
 	$login_button = '<ul><li><a href="/cabinet">Личный кабинет</a></li><li class="exit"><a href="?exit=1"></a></li></ul>';
-}
-
-$template->set_menu('menu_top', 'parts/menu_top.html');
-$template->register_variables('menu_top', "login_button");
-$template->file_parser('menu_top');
-$menu_top = $template->get_file('menu_top');
-
-if (!isset($_GET['page'])){
-	$template->set_menu('menu_right', 'parts/menu_right.html');
-	$slider_wrapper_BEGIN = "<div class='slider-wrapper clear-fix'>";
-	$slider_wrapper_END = "</div>";
-	$rMenu_wrapper_BEGIN = "<div class='right-menu'>";
-	$rMenu_wrapper_END = "</div>";
-	$template->file_parser('menu_right');
-	$menu_right = $template->get_file('menu_right');
-}
-elseif ($session_controller->authorized) {
 	switch ($_GET['page']) {
-	case 'finance':
+		case 'finance':
 		$prTable_BEGIN = '<table class="payments_records"><tbody><tr><th>№ заказа</th><th>Сумма</th><th>Дата платежа</th></tr>';
 		$prTable_END = '</tbody></table>';
 		$payments_records = $db_controller->payments_data();
@@ -74,27 +53,34 @@ elseif ($session_controller->authorized) {
 		} else {
 			$payments_report =  'У вас нет записей';
 		}
-	case 'cabinet':
-	case 'cams_settings':
-	case 'events':
-	case 'success':
-	case 'fail':
-	include("includes/payment.php");
-	$template->set_menu('menu_right_cabinet', 'parts/menu_right_cabinet.html');
-	$template->register_variables('menu_right_cabinet', "payment_form");
-	$template->file_parser('menu_right_cabinet');
-	$menu_right_cabinet = $template->get_file('menu_right_cabinet');
-	
-    break;
+		case 'cabinet':
+		case 'events':
+		case 'success':
+		case 'fail':
+		include("includes/payment.php");
+		$template->set_block('PAYMENT_FORM',$payment_form);
+		$template->set_block('PAYMENTS_REPORT',$payments_report);
+			break;
 	}
+	$menu_right_cabinet = $template->get_file('parts/menu_right_cabinet.html');
 }
 
-// Регистрация блоков
-$template->register_variables($tpl, "slider,login_form,menu_top,rMenu_wrapper_BEGIN,rMenu_wrapper_END,menu_right,slider_wrapper_BEGIN,slider_wrapper_END,menu_right_cabinet");
-// Регистрация переменных
-$template->register_variables($tpl, "page_title,user_nick,user_fund,copyright,user_id,payments_report,payment_form");
+// Установка блоков
+$template->set_block('MENU_TOP',$menu_top);
+$template->set_block('login_button',$login_button);
+$template->set_block('login_form',$login_form);
 
-$template->file_parser($tpl);
-// Вывод готовой страницы
-$template->eval_file($tpl);
+$template->set_block('SLIDER_BLOCK',$slider_block,'slider-wrapper clear-fix','home');
+$template->set_block('MENU_CABINET',$menu_right_cabinet,'','finance,cabinet,cams_settings,events,success,fail');
+$template->set_block('MENU_MOBILE',$menu_right);
+
+$template->set_block('user_id',$user_id);
+$template->set_block('user_nick',$user_nick);
+$template->set_block('user_fund',$user_fund);
+$template->set_block('page_title',$page_title);
+$template->set_block('copyright',$copyright);
+
+//Парсим
+$template->tpl_parse();
+eval (' ?' . '>' . $template->template . '<' . '?php ');
 ?>

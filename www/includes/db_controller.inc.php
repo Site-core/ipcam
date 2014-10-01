@@ -8,13 +8,14 @@ class db_controller {
 		$usr = $this->config['DBUSER']='root';
 		$pwd = $this->config['DBPASS']='';
 		$db = $this->config['DB']='ipcam_ru';
-		
-		global $foo;
-		$foo='bar';
+
 		$this->mysqli = @new mysqli($host, $usr, $pwd, $db);
-			if ($mysqli->connect_errno) {
-				echo "Не удалось подключиться к MySQL: (" . $mysqli->connect_errno . ")";
+			if ($this->mysqli->connect_errno) {
+				echo "Не удалось подключиться к MySQL: (" . $this->mysqli->connect_errno . ")";
 			}
+		if (!$this->mysqli->set_charset("utf8")) {
+			printf("Ошибка при загрузке набора символов utf8: %s\n", $this->mysqli->error);
+		}
 	}
 	
 	function db_close() {
@@ -52,8 +53,8 @@ class db_controller {
 	}
 	
 	function auth_query($login,$password) {
-		$login = $this->mysqli->real_escape_string($login);
-		$password = $this->mysqli->real_escape_string($password);
+		$login = @$this->mysqli->real_escape_string($login);
+		$password = @$this->mysqli->real_escape_string($password);
 		$result = !self::is_static() ? $this->get_db_data('auth_data',$login,$password) : self::get_db_data('auth_data',$login,$password);
 		if ($result->num_rows===1) {
 			$auth_data = @$result->fetch_array(MYSQLI_ASSOC);
