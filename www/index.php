@@ -6,7 +6,7 @@ require("includes/config.inc.php");
 // Подключение классов
 require("includes/db_controller.inc.php");
 require("includes/session_controller.inc.php");
-require ("templates/init.tpl_2.php");
+require ("templates/init.tpl.php");
 
 // Создать экземпляры классов
 $db_controller = new db_controller;

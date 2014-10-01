@@ -1,92 +1,63 @@
 <?php
 defined('sCore') or die('access denied');
 class template {
-	VAR $files = array();
-	VAR $variables = array();
-	VAR $opening_escape = '{';
-	VAR $closing_escape = '}';
-
-
-	function set_tpl($tpl) {
-	$this->tpl=$tpl;
+# SC_engine v1.2
+	private $files = array();
+	private $vars = array();
+	private $pvt_pgs = array();
+	VAR $template;
+	VAR $homepage = 'home';
+	
+	function set_tpl($tpl_name){
+		$this->template = $this->get_file($tpl_name);
 	}
 
-	function register_file($file_id, $file_name) {
-	// Открыть $file_name для чтения или завершить программу
-	// с выдачей сообщения об ошибке.
-	$fh = fopen($file_name, "r") or die("Couldn't open $file_name!");
-	// Прочитать все содержимое файла $file_name в переменную.
-	$file_contents = fread($fh, filesize($file_name));
-	// Присвоить содержимое элементу массива
-	// с ключом $file_id
-	$this->files[$file_id] = $file_contents;
-	// Работа с файлом завершена, закрыть его.
-	fclose($fh);
-	}
-	function register_variables($file_id, $variable_name) {
-	// Попытаться создать массив,
-	// содержащий переданные имена переменных
-	$input_variables = explode(",", $variable_name);
-	// Перебрать имена переменных
-	while (list($key,$value) = each($input_variables)) :
-	// Присвоить значение очередному элементу массива $this->variables 
-	$this->variables[$file_id][] = $value;
-	endwhile;
+	function set_block($key,$var,$wrapper=false,$pages=''){
+	do {
+		if ($pages) {
+			$page = isset($_GET['page']) ? $_GET['page'] : $this->homepage;
+			if(!in_array($page, array_map('trim',explode(",", $pages)))){
+				if(!array_key_exists($key, $this->vars))
+					$this->vars[$key] = '';
+				break;
+			}
+		}
+		if($wrapper){
+			$BEGIN = '<div class="'.$wrapper.'">';
+			$END = '</div>';
+			$var = $BEGIN.$var.$END;
+		}
+		$this->vars[$key] = $var;
+	} while (0);
+		
 	}
 
-	function file_parser($file_id) {
-	// Сколько переменных зарегистрировано для данного файла?
-	$varcount = count($this->variables[$file_id]);
-	// Сколько файлов зарегистрировано?
-	$keys = array_keys($this->files);
-	// Если файл $file_id существует в массиве $this->files
-	// и с ним связаны зарегистрированные переменные
-	if ( (in_array($file_id, $keys)) && ($varcount > 0) ) :
-	// Сбросить $x 
-	$x = 0;
-	// Пока остаются переменные для обработки...
-	while ($x < sizeof($this->variables[$file_id])) :
-	// Получить имя очередной переменной 
-	$string = $this->variables[$file_id][$x];
-	// Получить значение переменной. Обратите внимание:
-	// для получения значения используется конструкция $$.
-	// Полученное значение подставляется в файл вместо
-	// указанного имени переменной.
-	GLOBAL $$string;
-	// Построить точный текст замены вместе с ограничителями
-	$needle = $this->opening_escape.$string.$this->closing_escape;
-	// Выполнить замену.
-	$this->files[$file_id] = str_replace( $needle,$$string,$this->files[$file_id]);
-	// Увеличить $х 
-	$x++;
-	endwhile;
-	endif;
+	function get_file($file_name,$parse=false) {
+		$fh = @fopen($file_name, "r") or die("Couldn't open the file!");
+		$file_contents = fread($fh, filesize($file_name));
+		fclose($fh);
+/* 		if($parse)
+			$file_contents = $this->parse_file($file_contents); */
+		return $file_contents;
 	}
-
-	// Обработчик меню
-	function set_menu ($menu, $url){
-	GLOBAL $$menu;
-	$this->register_file($menu, $url);
-	$$menu = $this->get_file($menu);
-	}
-
-	// Обработчик страниц
-	function sec_pgs($pages) {
+	
+	function pvt_pgs($pages) {
 		GLOBAL $session_controller;
 		if (!$session_controller->authorized) {
-			$this->sec_pgs = explode(",", $pages);
+			$this->pvt_pgs = array_map('trim',explode(",",$pages));
 		}
 	}
 
-	function set_content() {
-		GLOBAL $content;
+// Обработчик страниц
+	function set_content () {
 		$page = filter_input(INPUT_GET, "page", FILTER_VALIDATE_REGEXP,
 			array("options"=>array("regexp"=>"/^[a-z0-9_]+$/")));
+		
 		if ($page) {
-			if (is_array($this->sec_pgs) && in_array($_GET['page'], $this->sec_pgs)){
+			if (is_array($this->pvt_pgs) && in_array($_GET['page'], $this->pvt_pgs)){
 				$content=PGS_DIR."access_denied.html";
 			} else {
-				$content = PGS_DIR.$_GET['page'].".html";
+				$content = PGS_DIR.'/'.$page.'.html';
 				if (!file_exists($content)){
 					$content = PGS_DIR.$_GET['page'].".php";
 					if (!file_exists($content)) {
@@ -96,31 +67,24 @@ class template {
 				}
 			}
 		} elseif (is_null($page)) {
-			GLOBAL $slider;
-			$this->register_file('slider', 'parts/slider.html');
-			$slider = $this->get_file('slider');
-			$content = PGS_DIR.'home.html';
+			$content = PGS_DIR.'/'.$this->homepage.'.html';
 		} else {
 			http_response_code(404);
 			$content = '404.html';
 		}
 
-		$this->register_file('content', $content);
-		$content = $this->get_file('content');
-		$this->register_variables($this->tpl,'content');
+		$content = $this->get_file($content);
+		$content = $this->parse_file($content);
+		$this->set_block('CONTENT', $content);
 	}
-
-	// Методы вывода файлв
-	function print_file($file_id) {
-	// Вывести содержимое файла с идентификатором $file_id
-	print $this->files[$file_id];
+	function parse_file ($file){
+		foreach($this->vars as $find => $replace){
+			$file = str_replace("{".$find."}", $replace, $file);
+		}
+		return $file;
 	}
-	function eval_file($file_id) {
-	// Вывести содержимое файла с идентификатором $file_id
-	eval (' ?' . '>' . $this->files[$file_id] . '<' . '?php ');
-	}
-	function get_file($file_id) {
-	return $this->files[$file_id];
+	function tpl_parse(){
+		$this->template = $this->parse_file($this->template);
 	}
 }
 ?>
