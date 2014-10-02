@@ -1,5 +1,5 @@
 <?php
-
+defined('sCore') or die('access denied');
 class session_controller {
 	var $authorized = false;
 	var $session_lifetime = 1800;
