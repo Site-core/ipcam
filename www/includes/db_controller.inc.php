@@ -1,4 +1,5 @@
 <?php
+defined('sCore') or die('access denied');
 class db_controller {
 	
 	var $config = array();
@@ -10,8 +11,8 @@ class db_controller {
 		$db = $this->config['DB']='ipcam_ru';
 
 		$this->mysqli = @new mysqli($host, $usr, $pwd, $db);
-			if ($this->mysqli->connect_errno) {
-				echo "Не удалось подключиться к MySQL: (" . $this->mysqli->connect_errno . ")";
+			if ($this->mysqli->connect_error) {
+				die ("Не удалось подключиться к MySQL: (" . $this->mysqli->connect_errno . ")");
 			}
 		if (!$this->mysqli->set_charset("utf8")) {
 			printf("Ошибка при загрузке набора символов utf8: %s\n", $this->mysqli->error);
