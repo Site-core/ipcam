@@ -72,7 +72,7 @@ $template->set_block('login_form',$login_form);
 
 $template->set_block('SLIDER_BLOCK',$slider_block,'slider-wrapper clear-fix','home');
 $template->set_block('MENU_CABINET',$menu_cabinet,'','finance,cabinet,cams_settings,events,success,fail');
-$template->set_block('MENU_MOBILE',$menu_right);
+$template->set_block('MENU_MOBILE',$menu_right,'right-menu-mobile','home,about_us,how_it_works,our_systems,payment_methods,contract');
 
 $template->set_block('user_id',$user_id);
 $template->set_block('user_nick',$user_nick);
