@@ -951,33 +951,26 @@ input {
 	position: relative;
 	border-right: 1px solid #919191;
 	width: 33%;
-	height: 0%;
+	text-align: center;
+	padding: 90px 0;
 	padding-bottom: 1%;
 	display: inline-block;
+	font-weight: 500;
+	font-size: 19px;
+	color: #333;
 }
 
 .contacts_part:nth-child(3) {
 	border-right: none;
 }
 
-.contacts_part a {
-	display: block;
-	text-align: center;
-	margin: 90px auto 0;
-	width: 100%;
-	font-weight: 500;
-	font-size: 19px;
-	color: #333;
-}
-
-.contacts_part a:hover {
+.contacts_part:hover {
 	color: #347A3C;
 }
 
 .contacts_border {
 	margin-top: 68px;
 	width: 100%;
-
 }
 
 .contacts_icon1 {
