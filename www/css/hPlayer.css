@@ -288,8 +288,6 @@
     border-radius: 16px;
     background-color: #fff;
     float: left;
-    margin-left: 10%;
-
     border: 3px solid #53bf6b;
 }
 
@@ -351,6 +349,8 @@
     height: 100% !important;
 }
 #hPlayer:-webkit-full-screen  object{
+width: 100% !important;
+height: 100% !important;
 zoom: 10;
 }
 #hPlayer:-webkit-full-screen  .playerControl{
@@ -381,6 +381,8 @@ zoom: 10;
     height: 100% !important;
 }
 #hPlayer:-moz-full-screen  object{
+	width: 100% !important;
+	height: 100% !important;
     zoom: 10;
 }
 #hPlayer:-moz-full-screen  .playerControl{

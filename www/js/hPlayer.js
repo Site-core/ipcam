@@ -97,7 +97,8 @@ var hPlayer = function() {
                 fullScreen(document.getElementById(hInterface.n_main));
             }
             else{
-                 hApi.toggleFullscreen();
+               //  hApi.toggleFullscreen();
+				 fullScreen(document.getElementById(hInterface.n_main));
             }
         },
         config:function() {
@@ -281,12 +282,10 @@ var hPlayer = function() {
                 plugin.audio.volume = hPlugin.options.volume;
                 if (!plugin) {
                     setTimeout(this.togglePlay(), 100);
-					
                     return false;
-                }
-                else{
+                } else {
                     var options = this.get();
-                     if(hOptions.init.ad_state){
+/* 					 if(hOptions.init.ad_state){
                          if(!hOptions.init.ad_isView){
                              plugin.playlist.add(hOptions.init.ad_link, hOptions.init.ad_link, options);
                              plugin.playlist.add(_play, _play, options);
@@ -296,8 +295,9 @@ var hPlayer = function() {
                          else{
                              plugin.playlist.add(_play, _play, options);
                          }
-                     }
-                    plugin.playlist.play();
+                     } */
+					if (!plugin.playlist.isPlaying)
+						plugin.playlist.play();
                     hPlugin.options.isPlaying = true;
                     return true;
                 }
@@ -321,7 +321,7 @@ var hPlayer = function() {
 						plugin.playlist.add(_playlist[i],_playlist[i],options);
 					}
 				} else {
-					plugin.playlist.add(_playlist, _playlist, options)
+					plugin.playlist.add(_playlist, _playlist, options);
 				};
             },
 			getPluginInfo:function() {
@@ -354,7 +354,8 @@ var hPlayer = function() {
 				if(direction == "prev") plugin.playlist.prev();
 				if(direction == "next") plugin.playlist.next();
 				if(typeof(direction) == "number") {
-				plugin.playlist.playItem(direction)
+					plugin.playlist.playItem(direction);
+					hPlugin.play();
 				};
             },
             toggleMute:function() {
@@ -524,37 +525,40 @@ var hPlayer = function() {
             return hApi;
         },
 		initTimeline: function() {
-		hInterface.e_main.after('<ul id="' + hInterface.n_timeline + '"></ul>');
+			hInterface.e_main.after('<ul id="' + hInterface.n_timeline + '"></ul>');
 		
 			var playlistItems = hApi.countPlaylist();
 			var _timeline = $('#' + hInterface.n_timeline);
 			
-			
-			
-			
 			for (var i = 0; i < playlistItems; i++) {
+				var filename = hOptions.init.stream[i];
+				pos_end = filename.lastIndexOf(".");
+				pos_start = pos_end-6;			
+				filename = filename.substring(pos_start,pos_end);
+				filename = filename.replace(/([0-9]{2})([0-9]{2})([0-9]{2})/g,"$1:$2:$3");
 				var id = 'timeSection' + '_' +  _timeline[0].childNodes.length;				
-				_timeline.append('<li id="'+id+'" data-title="Запись '+i+'"></li>');
+				_timeline.append('<li id="'+id+'" data-title="Время '+filename+'"></li>');
 				$('#' + id).bind('click', {section: i}, function(event) {
 					hApi.togglePlaylist(event.data.section);
                 });
 			}
 			
-			
-			var tsWidth = $('#' + _timeline[0].id + '> li').css('width');
+			var TimeSection = $('#' + _timeline[0].id + '> li');
+			var tsWidth = $(TimeSection).css('width'); // Timeline's Dot Width
 			tsWidth = parseInt(tsWidth);
-			tsWidth = _timeline.width()-tsWidth*playlistItems;
-			tsWidth = tsWidth/(playlistItems-1);
-			tsWidth = tsWidth.toFixed(2);
+			tsWidth = _timeline.width()-tsWidth*playlistItems; // free space on Timeline = TimelineWidth - Total width all of Timeline's Dots
+			tsWidth < 0 ? ( tsWidth = tsWidth/(playlistItems-1.4) ) : // if free space is negative
+				( tsWidth = tsWidth/(playlistItems-1) ); // else count number of section
+			tsWidth = tsWidth.toFixed(2); // TimeSections' margin
+
 //			tsWidth = tsWidth*100/_timeline.width();
 //			tempVar = parseInt($('#' + _timeline[0].id + '> li').css('width'))*100/_timeline.width();
 			
 //			console.log(tsWidth*3+tempVar*4);
 //			tsWidth = tsWidth.toFixed(2);
 //			console.log(tsWidth);
-			
-			$('#' + _timeline[0].id + '> li').not(':first').not(':last').css('margin-left',tsWidth+'px');
-			
+
+			$('#' + _timeline[0].id + '> li').not(':first').css('margin-left',tsWidth+'px');			
 		},
         initInterface:function() {
           var _PlayerContiner = '<div id="' + hInterface.n_screen + '">' +
