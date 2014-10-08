@@ -1,11 +1,12 @@
 .price_block {
+	width: 80%;
 	margin: 2.5em auto 0;
 }
 
 .price_block > ul {
 	float: left;
-	margin: 0 5%;
-	width: 23%;
+	margin: 0 3%;
+	width: 27%;
 	height: 18em;
 	-webkit-box-sizing:border-box; 
 	-moz-box-sizing:border-box; 

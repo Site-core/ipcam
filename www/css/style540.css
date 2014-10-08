@@ -35,6 +35,11 @@ div, li, a {
 
 }
 
+.mob_line_more {
+	display: block !important;
+}
+
+
 .portret {
 	display: none;
 }

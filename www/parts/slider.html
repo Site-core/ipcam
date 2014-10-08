@@ -5,7 +5,7 @@ jQuery(document).ready(function ($) {
 
 var options = {
 				 $FillMode: 0,   //[Optional] The way to fill image in slide, 0 stretch, 1 contain (keep aspect ratio and put all inside slide), 2 cover (keep aspect ratio and cover whole slide), 4 actual size, 5 contain for large image, actual size for small image, default value is 0
-$AutoPlay: true, //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+$AutoPlay: false, //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
 $AutoPlaySteps: 1,  //[Optional] Steps to go for each navigation request (this options applys only when slideshow disabled), the default value is 1
 $AutoPlayInterval: 4000,//[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
 $PauseOnHover: 1,   //[Optional] Whether to pause when mouse over if a slider is auto playing, 0 no pause, 1 pause for desktop, 2 pause for touch device, 3 pause for desktop and touch device, default value is 1
@@ -82,7 +82,7 @@ top: 0px; left: 0px;width: 100%;height:100%;">
 <!-- Slides Container -->
 <div u="slides" class="slides" style="cursor: move; position: relative; left: 0px; top: 0px; width:660px;  height: 304px; overflow: hidden;">
 	<div>
-		<img u="image" src="../img/slide1.svg" />
+		<img u="image" src="../img/slide11.svg" />
 
 		<div class="slide_text_1">
 
@@ -91,38 +91,47 @@ top: 0px; left: 0px;width: 100%;height:100%;">
 			<li><span>Следите за камерами со своих мобильных устроиств</span></li>
 			<li><span>Получайте sms уведомления о тревогах</span></li>
 		</ul>
-
+		</div>
+		<div class="slide_img s_i1"></div>
 		<div class="text_area">
-		<span>Возможность оперативного контроля событий через любые устройства</span>
+		<span>Возможность оперативного контроля событий </span>
 		</div>
 
-		</div>
 	</div>
 	<div>
-		<img u="image" src="../img/slide2.png" />
-		<ul class="slide_text_2">
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
-
-		<h3></h3>
-	</div>
-	<div>
-		<img u="image" src="../img/slide3.svg" />
-		<div class="slide_text_3 clear-fix">
+		<img u="image" src="../img/slide2.svg" />
+		<div class="slide_text_2 clear-fix">
 			<h2>Наши системы отлично подойдут для:</h2>
-
 			<p>Больниц</p>
 			<p>Домов</p>
 			<p>Школ</p>
 			<p>Складов</p>
 			<p>Офисов</p>
-			<div class="text_area">
+		</div>
+		<div class="text_area">
 				<span>Предоставим видеонаблюдение для ваших целей и задач</span>
 			</div>
-		</div>
+		<h3></h3>
 	</div>
+	<div>
+		<img u="image" src="../img/slide11.svg" />
+		<div class="slide_text_3">
+
+		<ul>
+			<li><span>на отдыхе</span></li>
+			<li><span>В деловой поездке</span></li>
+			<li><span>Где бы вы не находились</span></li>
+		</ul>
+
+		
+	</div>
+
+	<div class="slide_img s_i3"></div>
+
+	<div class="text_area">
+		<span>Ваши камеры всегда на связи</span>
+		</div>
+
 </div>
 
 <!-- Bullet Navigator Skin Begin -->
@@ -143,3 +152,4 @@ top: 0px; left: 0px;width: 100%;height:100%;">
 <!-- Arrow Navigator Skin End -->
 </div>
 <!-- Jssor Slider End -->
+</div>

@@ -19,8 +19,8 @@ h1 , h2 , h3, h4, p , a , span{
 }
 
 .feedback {
-	width: 900px;
-	float: left;
+	width: 700px;
+	margin: 0 auto;
 }
 
 .description {
@@ -494,17 +494,18 @@ display:none;
 }
 
 .small-feed {
-	margin-bottom: 0.5em;
-	width: 75%;
-	float: right;
-	margin-right: 7.4%;
+	margin: 0 auto 2em;
+	width: 100%;
+	float: left;
 }
 
-.small-feed:nth-child(odd) {
-	float: left;
-	margin-right: 0;
-	margin-left: 7.4%;
+.small-feed:last-child {
+	margin: 0 auto 0 !important;
 }
+.small-feed:nth-child(even) {
+	margin-left: 44px;
+}
+
 
 .small-feed p {
 	padding-top: 0.2em;
@@ -522,9 +523,12 @@ display:none;
 	width: 13%;
 	height: 0%;
 	padding-bottom: 13%;
-	border-radius: 100%;
-	border: 3px solid #53bf6b;
+	border: 2px solid #53bf6b;
 	float: left;
+}
+
+.mob_line_more {
+	display: none;
 }
 
 
