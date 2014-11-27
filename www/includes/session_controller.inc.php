@@ -1,14 +1,14 @@
 <?php
 defined('sCore') or die('access denied');
-class session_controller {
+class session_controller extends db_controller {
 	var $authorized = false;
 	var $session_lifetime = 1800;
 	var $sid_rst_time = 1800;
 	
 	function __construct() {
-		GLOBAL $db_controller;
-		$this->db_controller = $db_controller;
+		parent::__construct();
 		session_start();
+		
 		if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $this->session_lifetime)) {
 			// last request was more than 30 minutes ago
 			session_unset();
@@ -32,17 +32,16 @@ class session_controller {
 			if($_GET['exit']) {
 				$this->logout();
 			}
-			if ($this->db_controller->user_data())
+			if ($this->user_data())
 				$this->authorized=true;
 		}
 	}
 	
 	function authorization() {
-		GLOBAL $db_controller;
 		$login = preg_replace("/[^(\w-)]/",'',strip_tags(substr($_POST['login'],0,30)));
 		$upass = md5(preg_replace("/[^(\w-)]/",'',strip_tags(substr($_POST['password'],0,50))));
 		if($login !='' AND $upass !='') {
-			$user_data=$this->db_controller->auth_query($login,$upass);
+			$user_data=$this->auth_query($login,$upass);
 			if($user_data){
 				$this->set_session_data($user_data);
 				header("Location: /");
@@ -68,7 +67,7 @@ class session_controller {
 		session_unset();
 		session_destroy();
 		unset($_GET['exit']);
-		$this->db_controller->db_close();
+		$this->db_close();
 		header("Location: /");
 	}
 }

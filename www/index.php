@@ -1,16 +1,19 @@
 <?php
-define('sCore', true);
+define ('sCore', true);
 //Поключаем конфиг
-require("includes/config.inc.php");
+require ("includes/config.inc.php");
 
 // Подключение классов
-require("includes/db_controller.inc.php");
-require("includes/session_controller.inc.php");
+require ("includes/db_controller.inc.php");
+require ("includes/session_controller.inc.php");
+require ("includes/class_switcher.inc.php");
 require ("templates/init.tpl.php");
 
 // Создать экземпляры классов
-$db_controller = new db_controller;
+//$db_controller = new db_controller;
 $session_controller = new session_controller();
+$db_controller = $session_controller;
+new class_switcher();
 $template = new template;
 
 $template->set_tpl('templates/index.tpl.html'); //Файл который мы будем парсить

@@ -1,5 +1,6 @@
 AddDefaultCharset utf-8
 Options -Indexes
+# dnwr_ip 192.168.1.2
 RewriteEngine On
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
