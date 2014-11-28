@@ -5,9 +5,13 @@
 ?>
 <div class="calendar clear-fix">
 	<div class="month clear-fix">
-		<div class="prev_arow"></div>
+		<div class="prev_arow">
+			<svg id="prev_arrow" viewBox="0 0 100 52"></svg>
+		</div>
 		<div class="month_name"><h2><?php echo $calendar->get_date('month_year'); ?></h2></div>
-		<div class="next_arow"></div>
+		<div class="next_arow">
+			<svg id="next_arrow" viewBox="0 0 100 52"></svg>
+		</div>
 	</div>
 	<div class="table_wrapper">
 		<?php echo $calendar->generate_table();
@@ -15,3 +19,17 @@
 		?>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		prevArrow = Snap('#prev_arrow');
+		nextArrow = Snap('#next_arrow');
+		Snap.load("/img/Description_icons.svg", onSVGLoaded ) ;
+		function onSVGLoaded( data ){
+console.log(data);
+    prevArrow.append(data);
+    nextArrow.append(data);
+	group.hover( hoverover, hoverout );
+}
+	});
+</script>
