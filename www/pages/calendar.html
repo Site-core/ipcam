@@ -1,17 +1,10 @@
 <?php
-	$calendar = new calendar('2014-07-10');			
+	$calendar = new calendar('2014-07-10');
 	//$numm = cal_days_in_month(CAL_GREGORIAN, date('n'), date('Y')); // 31			
 	//echo "Всего $num дней в ".date('F').$year." года<br>";
 ?>
-<div class="calendar clear-fix">
-	<div class="month clear-fix">
-		<div class="prev_arow"></div>
-		<div class="month_name"><h2><?php echo $calendar->get_date('month_year'); ?></h2></div>
-		<div class="next_arow"></div>
-	</div>
-	<div class="table_wrapper">
-		<?php echo $calendar->generate_table();
-		print_r($calendar->parse_path());
+
+		<?php echo $calendar->generate_table()[0];
+			echo $calendar->generate_table()[1];
+			//print_r($calendar->set_dates());
 		?>
-	</div>
-</div>

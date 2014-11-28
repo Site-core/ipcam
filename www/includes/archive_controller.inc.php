@@ -2,11 +2,13 @@
 class archive_controller {
 
 	var $host;
+	var $in_dir = array();
 	var $dirs = array();
 	
 	function __construct() {
 		$this->host = "http://archive";
 		$this->dirs = $this->curl_request();
+		$this->in_dir = array_keys($this->parse_path());
 	}
 	
 	function curl_request() {
@@ -24,11 +26,11 @@ class archive_controller {
 	}
 	
 	function parse_path() {
+		$dirs_array = $this->dirs;
 		# Преобразовать путь в массив
-		if (isset($_GET['url'])) {
+		if ($_GET['url']) {
 			$path = preg_split('/[\\/]+/', $_GET['url'], -1, PREG_SPLIT_NO_EMPTY);
-				
-			$dirs_array = $this->dirs;
+			
 			
 			foreach($path as $piece) {
 				if(array_key_exists($piece, $dirs_array)){
@@ -39,8 +41,9 @@ class archive_controller {
 					break;
 				}
 			}
-			return $dirs_array;
 		}
+			return $dirs_array;
+			
 	}
 }
 ?>
