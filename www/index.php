@@ -12,7 +12,7 @@ require ("templates/init.tpl.php");
 // Создать экземпляры классов
 //$db_controller = new db_controller;
 $session_controller = new session_controller();
-$db_controller = $session_controller;
+$db_controller = &$session_controller;
 new class_switcher();
 $template = new template;
 

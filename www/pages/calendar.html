@@ -1,10 +1,43 @@
 <?php
-	$calendar = new calendar('2014-07-10');
+	$calendar = new calendar();
 	//$numm = cal_days_in_month(CAL_GREGORIAN, date('n'), date('Y')); // 31			
 	//echo "Всего $num дней в ".date('F').$year." года<br>";
-?>
 
-		<?php echo $calendar->generate_table()[0];
-			echo $calendar->generate_table()[1];
+			$calendar->show();
 			//print_r($calendar->set_dates());
 		?>
+<script>
+$(document).ready(function() {
+//var box = document.createElement("div");
+
+(function add_context(){
+	var content_width = $('.content').width();
+	var content_height = $('.content').height();
+	
+	
+	console.log (content_width +' x '+ content_height);
+	
+	
+	var $content_position = $('.content').position();
+	var $transition = {'transition': '1s linear'};
+	$( ".recorded" ).each(function() {
+		//var width = $(this).width();
+		//var height = $(this).height();
+	//	console.log (width +' x '+ height);
+		
+		var $this_position = $(this).position();
+	//	console.log($content_position);
+		console.log($this_position);
+		$position_top = Math.round($this_position.top/3);
+		
+		console.log($position_top);
+		$( ".date_in", this ).css('transform-origin', 'center ' + $position_top +'px');
+	});
+	$( ".recorded" ).click(function() {
+		console.log('CLICK');
+		$(".date_in", this ).toggleClass( "date_in_active" ).css($transition);
+
+	});
+}).call(this)
+});
+</script>

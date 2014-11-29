@@ -5,12 +5,11 @@ class calendar extends archive_controller {
 	var $month;
 	var $dates = array();
 	var $year;
+	var $calendars = array();
 	
 	var $days_in_month;
-	var $first_day;
-	var $last_day;
 	
-	function __construct($date) {
+	function __construct() {
 		parent::__construct();
 		# Timezone and Locale
 		$timezone = 'Asia/Yekaterinburg';
@@ -21,7 +20,8 @@ class calendar extends archive_controller {
 //		$this->month = 11; //date('n')
 //		$this->year = date('Y');
 		# Date info
-		$this->days_in_month = $this->get_date('days_in_month');
+		
+		$this->generate_table();
 	}
 	
 	function get_date($format) {
@@ -56,63 +56,76 @@ class calendar extends archive_controller {
 		$replacement = '$1';
 		$this->dates = array_values(
 			array_unique(
-				preg_replace($pattern, $replacement, $this->in_dir)
+				preg_replace($pattern, $replacement, $this->in_root_dir)
 			)
 		);
-		return $this->dates;
+	//	return $this->dates;
 	}
 	
 	function generate_table() {
 		$this->set_dates();
 		$calendar = array();
-		foreach($this->dates as $key => $date){
-			$split_dates = preg_split('/-/', $this->dates[$key], -1); // разделить ГГ-ММ в массив
+		foreach($this->dates as $num => $date){
+			$split_dates = preg_split('/-/', $this->dates[$num], -1); // разделить ГГ-ММ в массив
 			$this->year = $split_dates[0];
 			$this->month = $split_dates[1];
-			
-			//echo $this->dates[$key];
-			$pattern = '/^'.$this->dates[$key].'-0?(\d{1,2})$/';
+			$this->days_in_month = $this->get_date('days_in_month');
+			//echo $this->dates[$num];
+			$pattern = '/^'.$this->dates[$num].'-0?(\d{1,2})$/';
 			$replacement = '$1';
-			$marked_dates = preg_filter($pattern, $replacement, $this->in_dir);
-			// echo '<pre>';
-			// print_r($marked_dates);
-			// echo '</pre>';
+			$marked_dates = preg_filter($pattern, $replacement, $this->in_root_dir);
+		//	echo '<pre>';
+		//	print_r($this->in_root_dir);
+		//	print_r($marked_dates);
+		//	echo '</pre>';
 			$weekdays = array('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс');
 			$first_day = $this->get_date('first_day_in_month');
 			$last_day = $this->get_date('last_day_in_month');
-			$calendar[$key]='<div class="calendar clear-fix">
-				<div class="month clear-fix">
-					<div class="prev_arow"></div>
+			$calendars[$num]='<div id="calendar'.$num.'" class="calendar">
+				<div class="month">
+					
 					<div class="month_name"><h2>'. $this->get_date('month_year') .'</h2></div>
-					<div class="next_arow"></div>
+					
 				</div>
 				<div class="table_wrapper">';
-			$calendar[$key] .= '<table><tr class="days">';
-			foreach($weekdays as $weekday) {
-				$calendar[$key] .= '<th>'.$weekday.'</th>';
+			$calendars[$num] .= '<table><tr class="days">';
+			foreach ($weekdays as $weekday) {
+				$calendars[$num] .= '<th>'.$weekday.'</th>';
 			}
-			$calendar[$key] .= '</tr><tr class="dates">';
+			$calendars[$num] .= '</tr><tr class="dates">';
 			if ($first_day != 1)
-				$calendar[$key] .= '<td class="blank_top" colspan="'.($first_day-1).'"></td>';
+				$calendars[$num] .= '<td class="blank_top" colspan="'.($first_day-1).'"></td>';
 				
 			for ($i = 1; $i <= $this->days_in_month; $i++) {
 				$weekday = date("N", mktime(0, 0, 0, $this->month, $i, $this->year));
-
-				$class = (in_array($i, $marked_dates) ? "style='color:red'" : ""); // Есть ли соответствующая папка для даты?
+				if ( ($key = array_search($i, $marked_dates)) !== false) {
+					//echo $this->in_root_dir[$key];
+					$calendars[$num] .= "<td class='recorded'><div class='date_in'></div><div><a>".$i."</a></div></td>";
+				} else {
+					$calendars[$num] .= "<td><div><a href='?url=".$this->in_root_dir[$key]."'>$i</a></div></td>";
+				}
+			//	$class = (in_array($i, $marked_dates) ? "style='color:red'" : ""); // Есть ли соответствующая папка для даты?
 				
-				$calendar[$key] .= "<td><a $class href=''>".$i."</a></td>";
+			//	$calendars[$num] .= "<td><a $class href=''>".$i."</a></td>";
 				if ($weekday % 7 === 0 && $i != $this->days_in_month)
-					$calendar[$key] .= '</tr><tr class="dates">';
+					$calendars[$num] .= '</tr><tr class="dates">';
 			}
 			
 			if ($last_day != 7)
-				$calendar[$key] .= '<td class="blank_bottom" colspan="'.(7-$last_day).'"></td>';
-			$calendar[$key] .= '	
+				$calendars[$num] .= '<td class="blank_bottom" colspan="'.(7-$last_day).'"></td>';
+			$calendars[$num] .= '	
 					</tr>
 				</table>
 					</div></div>';
 		}
-		return $calendar;
+		$this->calendars = $calendars;
+	}
+	
+	function show($num=''){
+		$this->calendars;
+		foreach($this->calendars as $calendar) {
+			echo $calendar;
+		}
 	}
 }
 ?>

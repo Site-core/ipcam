@@ -2,12 +2,14 @@
 class archive_controller {
 
 	var $host;
+	var $in_root_dir = array();
 	var $in_dir = array();
 	var $dirs = array();
 	
 	function __construct() {
 		$this->host = "http://archive";
 		$this->dirs = $this->curl_request();
+		$this->in_root_dir = array_keys($this->dirs);
 		$this->in_dir = array_keys($this->parse_path());
 	}
 	
